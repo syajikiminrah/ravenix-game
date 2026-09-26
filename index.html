@@ -1,0 +1,4685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07080d">
+
+<title>RAVENIX Manager — Silent Veil Entertainment</title>
+
+<style>
+/* =========================================================
+   RESET + THEME
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#05060a;
+    --panel:#0b0d13;
+    --panel2:#10131a;
+    --panel3:#151821;
+    --line:rgba(255,255,255,.07);
+    --line2:rgba(255,255,255,.12);
+    --text:#f3f4f8;
+    --muted:#737987;
+    --muted2:#505663;
+    --purple:#8d72ff;
+    --purple2:#6954c1;
+    --purple3:#493b8c;
+    --green:#58dfa5;
+    --red:#ff667d;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+
+/* =========================================================
+   REGISTRATION / FULLSCREEN
+========================================================= */
+
+.fullscreen{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:24px;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(119,87,255,.14),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #090a10,
+            #05060a
+        );
+}
+
+.registration{
+    width:min(470px,100%);
+    text-align:center;
+}
+
+.diamond{
+    position:relative;
+
+    width:64px;
+    height:64px;
+
+    margin:
+        0 auto
+        38px;
+
+    border:1px solid #4a4e5b;
+
+    transform:rotate(45deg);
+}
+
+.diamond::after{
+    content:"";
+
+    position:absolute;
+    inset:14px;
+
+    border:1px solid var(--purple);
+}
+
+.company{
+    color:#747a88;
+
+    font-size:8px;
+    letter-spacing:4px;
+}
+
+.registration h1{
+    margin:
+        14px 0
+        5px;
+
+    font-size:50px;
+    font-weight:300;
+
+    letter-spacing:10px;
+}
+
+.registration h2{
+    color:#747988;
+
+    font-size:9px;
+    font-weight:400;
+
+    letter-spacing:4px;
+}
+
+.form{
+    width:min(360px,100%);
+
+    margin:
+        40px auto
+        0;
+
+    text-align:left;
+}
+
+.form label{
+    display:block;
+
+    margin:
+        18px 0
+        8px;
+
+    color:#737987;
+
+    font-size:8px;
+    letter-spacing:2px;
+}
+
+input{
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #292d37;
+    border-radius:8px;
+
+    background:#0d0f15;
+
+    color:white;
+
+    outline:none;
+}
+
+input:focus{
+    border-color:
+        rgba(141,114,255,.75);
+}
+
+.gender{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:8px;
+}
+
+.gender button{
+    padding:14px;
+
+    border:1px solid #292d37;
+    border-radius:8px;
+
+    background:#0d0f15;
+
+    color:#777e8d;
+
+    transition:.2s;
+}
+
+.gender button:hover{
+    color:white;
+
+    border-color:
+        rgba(141,114,255,.4);
+}
+
+.gender button.selected{
+    color:white;
+
+    border-color:var(--purple);
+
+    background:
+        rgba(141,114,255,.13);
+}
+
+.primary{
+    width:100%;
+
+    margin-top:25px;
+
+    padding:14px;
+
+    border:0;
+    border-radius:8px;
+
+    background:#f2f2f5;
+
+    color:#090a0e;
+
+    font-size:9px;
+    font-weight:bold;
+
+    letter-spacing:1px;
+}
+
+.error{
+    min-height:15px;
+
+    margin-top:12px;
+
+    text-align:center;
+
+    color:#ff7188;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+   EMPLOYEE PROFILE
+========================================================= */
+
+.profile-card{
+    width:min(520px,100%);
+
+    padding:30px;
+
+    border:1px solid var(--line);
+    border-radius:15px;
+
+    background:#0d0f15;
+}
+
+.profile-card h2{
+    margin:
+        12px 0
+        25px;
+
+    font-weight:400;
+
+    letter-spacing:2px;
+}
+
+.profile-row{
+    display:flex;
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:
+        13px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.05);
+}
+
+.profile-row span{
+    color:#777d8b;
+
+    font-size:8px;
+    letter-spacing:2px;
+}
+
+.profile-row strong{
+    font-size:10px;
+}
+
+
+/* =========================================================
+   FIRST MEETING
+========================================================= */
+
+#meeting{
+    position:fixed;
+    inset:0;
+
+    z-index:1000;
+
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(108,79,211,.08),
+            transparent 35%
+        ),
+        #07080c;
+}
+
+.meeting-info{
+    position:absolute;
+
+    top:30px;
+    left:35px;
+
+    z-index:4;
+}
+
+.meeting-info strong{
+    display:block;
+
+    font-size:11px;
+
+    letter-spacing:2px;
+}
+
+.meeting-info span{
+    display:block;
+
+    margin-top:6px;
+
+    color:#666c7a;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+}
+
+.stage{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:12px;
+
+    padding:
+        80px 20px
+        190px;
+}
+
+.person{
+    width:115px;
+    height:320px;
+
+    display:grid;
+    place-items:center;
+
+    border:
+        1px solid rgba(255,255,255,.04);
+
+    border-radius:
+        65px 65px
+        8px 8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.018),
+            rgba(255,255,255,.005)
+        );
+
+    color:
+        rgba(255,255,255,.07);
+
+    font-size:45px;
+
+    transition:.25s;
+}
+
+.person.active{
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(141,114,255,.45);
+
+    background:
+        rgba(141,114,255,.07);
+
+    color:
+        rgba(255,255,255,.25);
+}
+
+.dialogue{
+    position:relative;
+
+    z-index:5;
+
+    width:min(900px,100%);
+
+    padding:22px;
+
+    border:1px solid #292c36;
+    border-radius:14px;
+
+    background:
+        rgba(10,11,16,.97);
+
+    box-shadow:
+        0 20px 70px
+        rgba(0,0,0,.4);
+}
+
+.speaker{
+    margin-bottom:10px;
+
+    color:#b7a9ff;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+}
+
+.dialogue-text{
+    min-height:45px;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+.dialogue-bottom{
+    display:flex;
+    justify-content:flex-end;
+
+    margin-top:15px;
+}
+
+.small-button{
+    padding:
+        9px 13px;
+
+    border:1px solid #30333e;
+    border-radius:7px;
+
+    background:#12141c;
+
+    color:#ddd;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app{
+    display:none;
+
+    height:100vh;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+    position:fixed;
+
+    top:0;
+    bottom:0;
+    left:0;
+
+    width:240px;
+
+    padding:
+        30px 20px;
+
+    background:#08090d;
+
+    border-right:
+        1px solid var(--line);
+
+    z-index:100;
+}
+
+.logo-text{
+    font-size:17px;
+
+    letter-spacing:5px;
+}
+
+.logo-text small{
+    display:block;
+
+    margin-top:8px;
+
+    color:#666c79;
+
+    font-size:7px;
+
+    letter-spacing:4px;
+}
+
+.nav{
+    margin-top:40px;
+}
+
+.nav button{
+    width:100%;
+
+    margin:3px 0;
+
+    padding:14px;
+
+    border:0;
+    border-radius:8px;
+
+    background:transparent;
+
+    color:#737987;
+
+    text-align:left;
+
+    transition:.2s;
+}
+
+.nav button:hover{
+    color:#c8cbd4;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.nav button.active{
+    border-left:
+        2px solid var(--purple);
+
+    background:#151326;
+
+    color:white;
+}
+
+.employee{
+    position:absolute;
+
+    left:20px;
+    right:20px;
+    bottom:25px;
+
+    padding-top:18px;
+
+    border-top:
+        1px solid var(--line);
+}
+
+.employee strong{
+    font-size:11px;
+}
+
+.employee small{
+    display:block;
+
+    margin-top:5px;
+
+    color:#666c78;
+
+    font-size:7px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+    height:100vh;
+
+    margin-left:240px;
+
+    padding:30px;
+
+    overflow:hidden;
+}
+
+.page-heading{
+    height:65px;
+}
+
+.page-heading small{
+    color:#666c78;
+
+    font-size:8px;
+
+    letter-spacing:3px;
+}
+
+.page-heading h2{
+    margin-top:7px;
+
+    font-weight:400;
+}
+
+.page{
+    display:none;
+
+    height:
+        calc(100vh - 95px);
+
+    min-height:0;
+}
+
+.page.active{
+    display:block;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+#dashboard{
+    overflow-y:auto;
+
+    padding-bottom:40px;
+}
+
+.hero{
+    min-height:280px;
+
+    padding:40px;
+
+    border:1px solid var(--line);
+    border-radius:18px;
+
+    background:
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(141,114,255,.15),
+            transparent 26%
+        ),
+        #0d0f15;
+}
+
+.hero h1{
+    margin:
+        16px 0
+        8px;
+
+    font-size:65px;
+    font-weight:300;
+
+    letter-spacing:10px;
+}
+
+.hero p{
+    color:#777d89;
+
+    font-size:9px;
+}
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+
+    margin-top:15px;
+}
+
+.stat{
+    padding:20px;
+
+    border:1px solid var(--line);
+    border-radius:12px;
+
+    background:#0d0f15;
+}
+
+.stat small{
+    color:#676d7b;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+}
+
+.stat strong{
+    display:block;
+
+    margin-top:10px;
+
+    font-size:22px;
+}
+
+
+/* =========================================================
+   MEMBERS
+========================================================= */
+
+#members{
+    overflow-y:auto;
+
+    padding-bottom:40px;
+}
+
+.member-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:12px;
+}
+
+.member-card{
+    overflow:hidden;
+
+    border:1px solid var(--line);
+    border-radius:13px;
+
+    background:#0d0f15;
+}
+
+.member-photo{
+    height:220px;
+
+    display:grid;
+    place-items:center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(141,114,255,.13),
+            transparent 35%
+        );
+
+    color:
+        rgba(255,255,255,.07);
+
+    font-size:70px;
+}
+
+.member-info{
+    padding:15px;
+}
+
+.member-info h3{
+    font-size:12px;
+
+    letter-spacing:2px;
+}
+
+.member-info p{
+    margin-top:5px;
+
+    color:#686e7b;
+
+    font-size:8px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   MESSAGES PAGE
+========================================================= */
+
+#messages{
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   MESSAGE LAYOUT
+========================================================= */
+
+.message-layout{
+    width:100%;
+    height:100%;
+
+    min-height:0;
+
+    display:grid;
+
+    grid-template-columns:
+        310px minmax(0,1fr);
+
+    overflow:hidden;
+
+    border:1px solid var(--line);
+    border-radius:15px;
+
+    background:#080a0f;
+}
+
+
+/* =========================================================
+   INBOX
+========================================================= */
+
+.inbox{
+    height:100%;
+
+    min-height:0;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    border-right:
+        1px solid var(--line);
+
+    background:#0a0c11;
+
+    scrollbar-width:thin;
+
+    scrollbar-color:
+        #313541 transparent;
+}
+
+.inbox::-webkit-scrollbar{
+    width:5px;
+}
+
+.inbox::-webkit-scrollbar-thumb{
+    background:#313541;
+
+    border-radius:20px;
+}
+
+.inbox-title{
+    position:sticky;
+
+    top:0;
+
+    z-index:5;
+
+    height:65px;
+
+    display:flex;
+    align-items:center;
+
+    padding:
+        0 22px;
+
+    border-bottom:
+        1px solid var(--line);
+
+    background:
+        rgba(10,12,17,.98);
+
+    font-size:10px;
+    font-weight:bold;
+
+    letter-spacing:3px;
+}
+
+
+/* =========================================================
+   CHAT LIST
+========================================================= */
+
+.chat-item{
+    min-height:82px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        14px 18px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.045);
+
+    cursor:pointer;
+
+    transition:.18s;
+}
+
+.chat-item:hover{
+    background:#101219;
+}
+
+.chat-item.active{
+    background:
+        linear-gradient(
+            90deg,
+            rgba(141,114,255,.10),
+            rgba(141,114,255,.025)
+        );
+}
+
+.avatar{
+    position:relative;
+
+    width:43px;
+    height:43px;
+
+    flex:0 0 43px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #20232e,
+            #14161e
+        );
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    color:#ddd;
+
+    font-size:11px;
+}
+
+.online{
+    position:absolute;
+
+    right:0;
+    bottom:1px;
+
+    width:9px;
+    height:9px;
+
+    border:
+        2px solid #0a0c11;
+
+    border-radius:50%;
+
+    background:var(--green);
+}
+
+.chat-meta{
+    flex:1;
+
+    min-width:0;
+}
+
+.chat-meta strong{
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#e9eaf0;
+
+    font-size:10px;
+}
+
+.preview{
+    overflow:hidden;
+
+    color:#606776;
+
+    font-size:8px;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+}
+
+
+/* =========================================================
+   CHAT PANEL
+========================================================= */
+
+.chat-panel{
+    width:100%;
+    height:100%;
+
+    min-width:0;
+    min-height:0;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(114,87,209,.035),
+            transparent 30%
+        ),
+        #080a0f;
+}
+
+
+/* =========================================================
+   CHAT HEADER
+========================================================= */
+
+.chat-header{
+    flex:0 0 65px;
+
+    min-height:65px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        0 20px;
+
+    border-bottom:
+        1px solid var(--line);
+
+    background:
+        rgba(9,11,16,.98);
+}
+
+.chat-header .avatar{
+    width:39px;
+    height:39px;
+
+    flex-basis:39px;
+}
+
+.chat-header h3{
+    font-size:11px;
+
+    letter-spacing:.4px;
+}
+
+.chat-header p{
+    margin-top:4px;
+
+    color:var(--green);
+
+    font-size:7px;
+}
+
+
+/* =========================================================
+   CHAT BODY — SCROLLABLE
+========================================================= */
+
+.chat-body{
+    flex:
+        1 1 0;
+
+    width:100%;
+
+    min-height:0;
+
+    overflow-y:auto!important;
+    overflow-x:hidden;
+
+    padding:
+        24px 28px
+        16px;
+
+    scroll-behavior:smooth;
+
+    overscroll-behavior:contain;
+
+    scrollbar-width:thin;
+
+    scrollbar-color:
+        #303440 transparent;
+}
+
+.chat-body::-webkit-scrollbar{
+    width:5px;
+}
+
+.chat-body::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+.chat-body::-webkit-scrollbar-thumb{
+    background:#303440;
+
+    border-radius:20px;
+}
+
+.chat-body::-webkit-scrollbar-thumb:hover{
+    background:#474c5a;
+}
+
+
+/* =========================================================
+   MESSAGE ROW
+========================================================= */
+
+.message{
+    width:100%;
+
+    display:flex;
+    align-items:flex-end;
+
+    margin-bottom:13px;
+}
+
+.message.me{
+    justify-content:flex-end;
+}
+
+.message-wrap{
+    width:auto;
+
+    max-width:68%;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:flex-start;
+}
+
+.message.me .message-wrap{
+    align-items:flex-end;
+}
+
+
+/* =========================================================
+   MEMBER NAME
+========================================================= */
+
+.sender{
+    margin:
+        0 0
+        5px 4px;
+
+    color:#686f7e;
+
+    font-size:7px;
+    font-weight:600;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================================
+   CLEAN SMALL BUBBLE
+========================================================= */
+
+.bubble{
+    display:inline-block;
+
+    width:auto;
+
+    max-width:100%;
+
+    padding:
+        9px 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.035);
+
+    border-radius:
+        4px 14px
+        14px 14px;
+
+    background:#151820;
+
+    color:#e7e8ed;
+
+    font-size:10.5px;
+
+    line-height:1.48;
+
+    white-space:pre-wrap;
+
+    overflow-wrap:anywhere;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0,0,0,.10);
+}
+
+
+/* =========================================================
+   PLAYER BUBBLE
+========================================================= */
+
+.message.me .bubble{
+    border-color:
+        rgba(255,255,255,.05);
+
+    border-radius:
+        14px 4px
+        14px 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #705ac8,
+            #5946a4
+        );
+
+    color:white;
+
+    box-shadow:
+        0 5px 16px
+        rgba(78,58,155,.15);
+}
+
+
+/* =========================================================
+   SYSTEM MESSAGE
+========================================================= */
+
+.system-message{
+    width:100%;
+
+    margin:
+        10px 0
+        24px;
+
+    text-align:center;
+
+    color:#4f5664;
+
+    font-size:7.5px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   EMPTY DM
+========================================================= */
+
+.empty-chat{
+    min-height:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:30px;
+
+    text-align:center;
+
+    color:#59606f;
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.empty-chat strong{
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#aeb2bc;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+.typing{
+    flex:0 0 auto;
+
+    min-height:25px;
+
+    padding:
+        3px 28px
+        6px;
+
+    background:#080a0f;
+
+    color:#666d7b;
+
+    font-size:8px;
+}
+
+.typing-dots::after{
+    content:"";
+
+    animation:
+        typingDots
+        1.2s infinite;
+}
+
+@keyframes typingDots{
+
+    0%{
+        content:"";
+    }
+
+    25%{
+        content:".";
+    }
+
+    50%{
+        content:"..";
+    }
+
+    75%,
+    100%{
+        content:"...";
+    }
+
+}
+
+
+/* =========================================================
+   DYNAMIC RESPONSE CHOICES
+========================================================= */
+
+.suggestions{
+    flex:0 0 auto;
+
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        7px 17px
+        9px;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    border-top:
+        1px solid rgba(255,255,255,.025);
+
+    background:#080a0f;
+
+    scrollbar-width:none;
+}
+
+.suggestions:empty{
+    display:none;
+}
+
+.suggestions::-webkit-scrollbar{
+    display:none;
+}
+
+.suggestion{
+    flex:0 0 auto;
+
+    padding:
+        8px 11px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius:7px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:#9297a4;
+
+    font-size:8px;
+
+    white-space:nowrap;
+
+    transition:.18s;
+}
+
+.suggestion:hover{
+    transform:
+        translateY(-1px);
+
+    border-color:
+        rgba(141,114,255,.45);
+
+    background:
+        rgba(141,114,255,.08);
+
+    color:white;
+}
+
+
+/* =========================================================
+   COMPOSER
+========================================================= */
+
+.composer{
+    flex:0 0 auto;
+
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        10px 17px
+        12px;
+
+    border-top:
+        1px solid var(--line);
+
+    background:#090b10;
+}
+
+.composer input{
+    flex:1;
+
+    min-width:0;
+
+    height:41px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid #272b35;
+
+    border-radius:8px;
+
+    background:#101219;
+
+    color:#eee;
+
+    font-size:10px;
+
+    outline:none;
+}
+
+.composer input:focus{
+    border-color:
+        rgba(141,114,255,.6);
+}
+
+.composer input::placeholder{
+    color:#4f5664;
+}
+
+.send{
+    width:41px;
+    height:41px;
+
+    flex:
+        0 0 41px;
+
+    border:0;
+    border-radius:8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #816ae2,
+            #6652bc
+        );
+
+    color:white;
+
+    font-size:13px;
+}
+
+.send:disabled{
+    opacity:.35;
+
+    cursor:not-allowed;
+}
+
+.ai-status{
+    flex:0 0 auto;
+
+    padding:
+        0 18px
+        9px;
+
+    background:#090b10;
+
+    color:#424956;
+
+    font-size:6px;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================================
+   DISCOGRAPHY
+========================================================= */
+
+#music{
+    overflow-y:auto;
+
+    padding-bottom:40px;
+}
+
+.albums{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+}
+
+.album{
+    aspect-ratio:1;
+
+    display:grid;
+    place-items:center;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:15px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(141,114,255,.12),
+            transparent 40%
+        ),
+        #0d0f15;
+
+    text-align:center;
+}
+
+.album strong{
+    font-size:24px;
+    font-weight:300;
+
+    letter-spacing:5px;
+}
+
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+.mobile-nav{
+    display:none;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:1000px){
+
+    .member-grid{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+    #app{
+        height:100dvh;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        width:100%;
+        height:100dvh;
+
+        margin:0;
+
+        padding:
+            16px 10px
+            72px;
+
+        overflow:hidden;
+    }
+
+    .page-heading{
+        height:57px;
+
+        padding-left:3px;
+    }
+
+    .page{
+        height:
+            calc(
+                100dvh -
+                145px
+            );
+    }
+
+    .hero{
+        padding:25px;
+    }
+
+    .hero h1{
+        font-size:39px;
+
+        letter-spacing:6px;
+    }
+
+    .stats{
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .member-grid{
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    /* MESSAGE APP */
+
+    .message-layout{
+        height:100%;
+
+        grid-template-columns:1fr;
+
+        border-radius:11px;
+    }
+
+    .chat-panel{
+        display:none;
+
+        height:100%;
+
+        min-height:0;
+    }
+
+    .message-layout.chat-open
+    .inbox{
+        display:none;
+    }
+
+    .message-layout.chat-open
+    .chat-panel{
+        display:flex;
+    }
+
+    .mobile-back{
+        display:block!important;
+    }
+
+    .chat-header{
+        flex:
+            0 0 60px;
+
+        min-height:60px;
+
+        padding:
+            0 10px;
+    }
+
+    .chat-body{
+        flex:
+            1 1 0;
+
+        min-height:0;
+
+        padding:
+            16px 11px
+            12px;
+
+        overflow-y:auto!important;
+
+        -webkit-overflow-scrolling:
+            touch;
+    }
+
+    .message-wrap{
+        max-width:82%;
+    }
+
+    .bubble{
+        padding:
+            9px 11px;
+
+        font-size:10.5px;
+    }
+
+    .typing{
+        padding:
+            3px 13px
+            6px;
+    }
+
+    .suggestions{
+        padding:
+            7px 10px
+            8px;
+    }
+
+    .composer{
+        padding:
+            9px 10px
+            10px;
+    }
+
+    .composer input{
+        height:40px;
+    }
+
+    .send{
+        width:40px;
+        height:40px;
+
+        flex-basis:40px;
+    }
+
+    .ai-status{
+        padding:
+            0 11px
+            7px;
+    }
+
+
+    /* BOTTOM NAV */
+
+    .mobile-nav{
+        position:fixed;
+
+        left:0;
+        right:0;
+        bottom:0;
+
+        z-index:500;
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(4,1fr);
+
+        border-top:
+            1px solid var(--line);
+
+        background:
+            rgba(9,10,15,.98);
+    }
+
+    .mobile-nav button{
+        padding:
+            14px 4px;
+
+        border:0;
+
+        background:transparent;
+
+        color:#6f7582;
+
+        font-size:8px;
+    }
+
+    .mobile-nav button.active{
+        color:white;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media(max-width:480px){
+
+    .registration h1{
+        font-size:35px;
+
+        letter-spacing:6px;
+    }
+
+    .member-grid{
+        grid-template-columns:1fr;
+    }
+
+    .message-wrap{
+        max-width:86%;
+    }
+
+    .stage{
+        gap:3px;
+    }
+
+    .person{
+        width:19%;
+
+        height:220px;
+
+        font-size:24px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     REGISTRATION
+========================================================= -->
+
+<section
+    class="fullscreen"
+    id="registrationScreen"
+>
+
+<div class="registration">
+
+    <div class="diamond"></div>
+
+    <div class="company">
+        SILENT VEIL ENTERTAINMENT
+    </div>
+
+    <h1>
+        RAVENIX
+    </h1>
+
+    <h2>
+        NEW EMPLOYEE REGISTRATION
+    </h2>
+
+
+    <form
+        class="form"
+        id="registrationForm"
+    >
+
+        <label>
+            MANAGER NAME
+        </label>
+
+        <input
+            id="playerNameInput"
+            type="text"
+            maxlength="20"
+            autocomplete="off"
+            placeholder="Enter your name"
+        >
+
+
+        <label>
+            GENDER
+        </label>
+
+
+        <div class="gender">
+
+            <button
+                type="button"
+                data-gender="female"
+            >
+                FEMALE
+            </button>
+
+            <button
+                type="button"
+                data-gender="male"
+            >
+                MALE
+            </button>
+
+        </div>
+
+
+        <button
+            class="primary"
+            type="submit"
+        >
+            CREATE EMPLOYEE PROFILE
+        </button>
+
+
+        <div
+            class="error"
+            id="registrationError"
+        ></div>
+
+    </form>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     PROFILE CREATED
+========================================================= -->
+
+<section
+    class="fullscreen hidden"
+    id="employeeScreen"
+>
+
+<div class="profile-card">
+
+    <div class="company">
+        SILENT VEIL ENTERTAINMENT
+    </div>
+
+    <h2>
+        EMPLOYEE PROFILE CREATED
+    </h2>
+
+
+    <div class="profile-row">
+
+        <span>NAME</span>
+
+        <strong id="profileName"></strong>
+
+    </div>
+
+
+    <div class="profile-row">
+
+        <span>GENDER</span>
+
+        <strong id="profileGender"></strong>
+
+    </div>
+
+
+    <div class="profile-row">
+
+        <span>POSITION</span>
+
+        <strong>
+            RAVENIX MANAGER
+        </strong>
+
+    </div>
+
+
+    <div class="profile-row">
+
+        <span>DEPARTMENT</span>
+
+        <strong>
+            ARTIST MANAGEMENT
+        </strong>
+
+    </div>
+
+
+    <div class="profile-row">
+
+        <span>EMPLOYEE STATUS</span>
+
+        <strong>
+            NEW
+        </strong>
+
+    </div>
+
+
+    <div class="profile-row">
+
+        <span>FIRST DAY</span>
+
+        <strong>
+            DAY 1
+        </strong>
+
+    </div>
+
+
+    <button
+        class="primary"
+        id="reportButton"
+        type="button"
+    >
+        REPORT TO ARTIST MANAGEMENT
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FIRST MEETING
+========================================================= -->
+
+<section
+    id="meeting"
+    class="hidden"
+>
+
+<div class="meeting-info">
+
+    <strong>
+        DAY 1 — 09:07 AM
+    </strong>
+
+    <span>
+        PRACTICE ROOM 04
+    </span>
+
+</div>
+
+
+<div class="stage">
+
+    <div
+        class="person"
+        data-person="KAEL"
+    >
+        K
+    </div>
+
+    <div
+        class="person"
+        data-person="ZAYN"
+    >
+        Z
+    </div>
+
+    <div
+        class="person"
+        data-person="RAYDEN"
+    >
+        R
+    </div>
+
+    <div
+        class="person"
+        data-person="ELIOR"
+    >
+        E
+    </div>
+
+    <div
+        class="person"
+        data-person="NOX"
+    >
+        N
+    </div>
+
+</div>
+
+
+<div class="dialogue">
+
+    <div
+        class="speaker"
+        id="meetingSpeaker"
+    >
+        SYSTEM
+    </div>
+
+    <div
+        class="dialogue-text"
+        id="meetingText"
+    ></div>
+
+    <div class="dialogue-bottom">
+
+        <button
+            class="small-button"
+            id="continueMeeting"
+            type="button"
+        >
+            CONTINUE →
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     GAME
+========================================================= -->
+
+<div id="app">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo-text">
+
+        SILENT VEIL
+
+        <small>
+            ENTERTAINMENT
+        </small>
+
+    </div>
+
+
+    <div class="nav">
+
+        <button
+            class="active"
+            data-page="dashboard"
+        >
+            ◇　Dashboard
+        </button>
+
+        <button
+            data-page="members"
+        >
+            ♙　Members
+        </button>
+
+        <button
+            data-page="messages"
+        >
+            ◌　Messages
+        </button>
+
+        <button
+            data-page="music"
+        >
+            ♫　Discography
+        </button>
+
+    </div>
+
+
+    <div class="employee">
+
+        <strong
+            id="sidebarPlayerName"
+        ></strong>
+
+        <small>
+            RAVENIX MANAGER · DAY 1
+        </small>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="page-heading">
+
+    <small>
+        SILENT VEIL / ARTIST MANAGEMENT
+    </small>
+
+    <h2 id="pageTitle">
+        Manager Dashboard
+    </h2>
+
+</div>
+
+
+<!-- =========================================================
+     DASHBOARD
+========================================================= -->
+
+<section
+    class="page active"
+    id="dashboard"
+>
+
+<div class="hero">
+
+    <div class="company">
+        YOUR ASSIGNED ARTIST
+    </div>
+
+    <h1>
+        RAVENIX
+    </h1>
+
+    <p>
+        5 MEMBER BOY GROUP ·
+        SILENT VEIL ENTERTAINMENT
+    </p>
+
+</div>
+
+
+<div class="stats">
+
+    <div class="stat">
+
+        <small>
+            EMPLOYMENT
+        </small>
+
+        <strong>
+            DAY 1
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            GROUP ENERGY
+        </small>
+
+        <strong>
+            82%
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            CEO APPROVAL
+        </small>
+
+        <strong>
+            50%
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            PUBLISHED SONGS
+        </small>
+
+        <strong>
+            03
+        </strong>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     MEMBERS
+========================================================= -->
+
+<section
+    class="page"
+    id="members"
+>
+
+<div
+    class="member-grid"
+    id="memberGrid"
+></div>
+
+</section>
+
+
+<!-- =========================================================
+     MESSAGES
+========================================================= -->
+
+<section
+    class="page"
+    id="messages"
+>
+
+<div
+    class="message-layout"
+    id="messageLayout"
+>
+
+
+<!-- INBOX -->
+
+<div class="inbox">
+
+    <div class="inbox-title">
+        MESSAGES
+    </div>
+
+    <div id="chatList"></div>
+
+</div>
+
+
+<!-- CHAT -->
+
+<div class="chat-panel">
+
+
+    <div class="chat-header">
+
+        <button
+            class="small-button hidden mobile-back"
+            id="mobileBack"
+            type="button"
+        >
+            ←
+        </button>
+
+
+        <div
+            class="avatar"
+            id="headerAvatar"
+        >
+            R
+        </div>
+
+
+        <div>
+
+            <h3 id="headerName">
+                RAVENIX 🖤
+            </h3>
+
+            <p id="headerStatus">
+                5 members
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCROLLING CONVERSATION -->
+
+    <div
+        class="chat-body"
+        id="chatBody"
+    ></div>
+
+
+    <!-- TYPING -->
+
+    <div
+        class="typing"
+        id="typingIndicator"
+    ></div>
+
+
+    <!-- CHANGING AI CHOICES -->
+
+    <div
+        class="suggestions"
+        id="suggestionBox"
+    ></div>
+
+
+    <!-- MESSAGE INPUT -->
+
+    <form
+        class="composer"
+        id="messageForm"
+    >
+
+        <input
+            id="messageInput"
+            type="text"
+            autocomplete="off"
+            maxlength="500"
+            placeholder="Message..."
+        >
+
+        <button
+            class="send"
+            id="sendButton"
+            type="submit"
+        >
+            ➤
+        </button>
+
+    </form>
+
+
+    <div class="ai-status">
+        RAVENIX MESSENGER · AI CONVERSATION
+    </div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     MUSIC
+========================================================= -->
+
+<section
+    class="page"
+    id="music"
+>
+
+<div class="albums">
+
+    <div class="album">
+
+        <strong>
+            NIGHT<br>BITE
+        </strong>
+
+    </div>
+
+    <div class="album">
+
+        <strong>
+            SILK<br>& SMOKE
+        </strong>
+
+    </div>
+
+    <div class="album">
+
+        <strong>
+            UNDER<br>DOGS
+        </strong>
+
+    </div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================================
+     MOBILE NAVIGATION
+========================================================= -->
+
+<nav class="mobile-nav">
+
+    <button
+        class="active"
+        data-page="dashboard"
+    >
+        HOME
+    </button>
+
+    <button
+        data-page="members"
+    >
+        MEMBERS
+    </button>
+
+    <button
+        data-page="messages"
+    >
+        CHAT
+    </button>
+
+    <button
+        data-page="music"
+    >
+        MUSIC
+    </button>
+
+</nav>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ = selector =>
+    document.querySelector(selector);
+
+const $$ = selector =>
+    [...document.querySelectorAll(selector)];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let selectedGender = null;
+
+let currentChat = "group";
+
+let currentlySending = false;
+
+let meetingIndex = 0;
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+const player = {
+
+    name:"",
+
+    gender:"",
+
+    pronouns:{
+
+        subject:"",
+        object:"",
+        possessive:""
+
+    },
+
+    employmentDay:1
+
+};
+
+
+/* =========================================================
+   MEMBERS
+========================================================= */
+
+const members = [
+
+{
+    name:"KAEL",
+
+    role:
+    "Leader / Main Rapper / Producer",
+
+    status:"Studio",
+
+    trust:3
+},
+
+{
+    name:"ZAYN",
+
+    role:
+    "Lead Rapper / Visual",
+
+    status:"Online",
+
+    trust:1
+},
+
+{
+    name:"RAYDEN",
+
+    role:
+    "Main Vocalist",
+
+    status:"Vocal Room",
+
+    trust:4
+},
+
+{
+    name:"ELIOR",
+
+    role:
+    "Main Dancer / Visual",
+
+    status:"Practice Room",
+
+    trust:2
+},
+
+{
+    name:"NOX",
+
+    role:
+    "Maknae / Lead Vocalist",
+
+    status:"Dorm",
+
+    trust:5
+}
+
+];
+
+
+/* =========================================================
+   CHAT DATA
+
+   GROUP HAS INTRO MESSAGES LATER.
+   EVERY PRIVATE DM STARTS EMPTY.
+========================================================= */
+
+const chats = {
+
+group:{
+
+    name:"RAVENIX 🖤",
+
+    avatar:"R",
+
+    status:"5 members",
+
+    messages:[],
+
+    suggestions:[]
+
+},
+
+KAEL:{
+
+    name:"KAEL",
+
+    avatar:"K",
+
+    status:"Studio",
+
+    messages:[],
+
+    suggestions:[]
+
+},
+
+ZAYN:{
+
+    name:"ZAYN",
+
+    avatar:"Z",
+
+    status:"Online",
+
+    messages:[],
+
+    suggestions:[]
+
+},
+
+RAYDEN:{
+
+    name:"RAYDEN",
+
+    avatar:"R",
+
+    status:"Vocal Room",
+
+    messages:[],
+
+    suggestions:[]
+
+},
+
+ELIOR:{
+
+    name:"ELIOR",
+
+    avatar:"E",
+
+    status:"Practice Room",
+
+    messages:[],
+
+    suggestions:[]
+
+},
+
+NOX:{
+
+    name:"NOX",
+
+    avatar:"N",
+
+    status:"Dorm",
+
+    messages:[],
+
+    suggestions:[]
+
+}
+
+};
+
+
+/* =========================================================
+   GENDER
+========================================================= */
+
+$$("[data-gender]")
+.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            selectedGender =
+                button.dataset.gender;
+
+
+            $$("[data-gender]")
+            .forEach(item => {
+
+                item.classList
+                .remove("selected");
+
+            });
+
+
+            button.classList
+                .add("selected");
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   REGISTRATION
+========================================================= */
+
+$("#registrationForm")
+.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+
+        const name =
+            $("#playerNameInput")
+            .value
+            .trim();
+
+
+        if(name.length < 2){
+
+            $("#registrationError")
+            .textContent =
+            "Enter your manager name.";
+
+            return;
+
+        }
+
+
+        if(!selectedGender){
+
+            $("#registrationError")
+            .textContent =
+            "Choose Female or Male.";
+
+            return;
+
+        }
+
+
+        player.name =
+            name;
+
+
+        player.gender =
+            selectedGender;
+
+
+        if(
+            selectedGender ===
+            "female"
+        ){
+
+            player.pronouns = {
+
+                subject:"she",
+                object:"her",
+                possessive:"her"
+
+            };
+
+        }
+
+        else{
+
+            player.pronouns = {
+
+                subject:"he",
+                object:"him",
+                possessive:"his"
+
+            };
+
+        }
+
+
+        $("#profileName")
+        .textContent =
+        player.name.toUpperCase();
+
+
+        $("#profileGender")
+        .textContent =
+        player.gender.toUpperCase();
+
+
+        $("#registrationError")
+        .textContent =
+        "";
+
+
+        $("#registrationScreen")
+        .classList.add("hidden");
+
+
+        $("#employeeScreen")
+        .classList.remove("hidden");
+
+    }
+);
+
+
+/* =========================================================
+   START FIRST MEETING
+========================================================= */
+
+$("#reportButton")
+.addEventListener(
+    "click",
+    () => {
+
+        $("#employeeScreen")
+        .classList.add("hidden");
+
+
+        $("#meeting")
+        .classList.remove("hidden");
+
+
+        meetingIndex =
+            0;
+
+
+        showMeetingScene();
+
+    }
+);
+
+
+/* =========================================================
+   FIRST MEETING
+========================================================= */
+
+function getMeetingScenes(){
+
+return [
+
+[
+    "SYSTEM",
+    "You hear several voices from inside Practice Room 04.",
+    null
+],
+
+[
+    "SYSTEM",
+    "You open the door.",
+    null
+],
+
+[
+    "KAEL",
+    "...You must be the new manager.",
+    "KAEL"
+],
+
+[
+    "NOX",
+    "Wait, that's our new manager?!",
+    "NOX"
+],
+
+[
+    "ZAYN",
+    "You sound surprised.",
+    "ZAYN"
+],
+
+[
+    "NOX",
+    "I didn't mean it like that!",
+    "NOX"
+],
+
+[
+    "ELIOR",
+    "You're making this weird already.",
+    "ELIOR"
+],
+
+[
+    "RAYDEN",
+    "Ignore them. Nice to meet you.",
+    "RAYDEN"
+],
+
+[
+    "KAEL",
+    "I'm Kael. Leader of RAVENIX.",
+    "KAEL"
+],
+
+[
+    "YOU",
+    `Nice to meet you. I'm ${player.name}. I'll be managing RAVENIX from today.`,
+    null
+],
+
+[
+    "RAYDEN",
+    `Nice to meet you, ${player.name}.`,
+    "RAYDEN"
+],
+
+[
+    "NOX",
+    `Manager ${player.name}...`,
+    "NOX"
+],
+
+[
+    "NOX",
+    "I have an important question.",
+    "NOX"
+],
+
+[
+    "KAEL",
+    "No.",
+    "KAEL"
+],
+
+[
+    "NOX",
+    "I DIDN'T EVEN ASK YET.",
+    "NOX"
+],
+
+[
+    "SYSTEM",
+    "A few minutes later, your phone vibrates.",
+    null
+],
+
+[
+    "SYSTEM",
+    "You have been added to RAVENIX 🖤.",
+    null
+]
+
+];
+
+}
+
+
+/* =========================================================
+   DISPLAY FIRST MEETING LINE
+========================================================= */
+
+function showMeetingScene(){
+
+    const scenes =
+        getMeetingScenes();
+
+
+    const scene =
+        scenes[meetingIndex];
+
+
+    $$(".person")
+    .forEach(person => {
+
+        person.classList
+        .remove("active");
+
+    });
+
+
+    if(scene[2]){
+
+        const activePerson =
+            document.querySelector(
+
+                `[data-person="${scene[2]}"]`
+
+            );
+
+
+        if(activePerson){
+
+            activePerson
+            .classList
+            .add("active");
+
+        }
+
+    }
+
+
+    $("#meetingSpeaker")
+    .textContent =
+    scene[0];
+
+
+    $("#meetingText")
+    .textContent =
+    scene[1];
+
+}
+
+
+/* =========================================================
+   CONTINUE MEETING
+========================================================= */
+
+$("#continueMeeting")
+.addEventListener(
+    "click",
+    () => {
+
+        meetingIndex++;
+
+
+        if(
+            meetingIndex >=
+            getMeetingScenes().length
+        ){
+
+            finishMeeting();
+
+            return;
+
+        }
+
+
+        showMeetingScene();
+
+    }
+);
+
+
+/* =========================================================
+   FINISH FIRST MEETING
+========================================================= */
+
+function finishMeeting(){
+
+    $("#meeting")
+    .classList.add("hidden");
+
+
+    $("#app")
+    .style.display =
+    "block";
+
+
+    $("#sidebarPlayerName")
+    .textContent =
+    player.name;
+
+
+    /*
+       ONLY THE GROUP CHAT STARTS
+       WITH MESSAGES.
+    */
+
+    chats.group.messages = [
+
+    {
+        sender:"SYSTEM",
+
+        text:
+        `${player.name} was added to RAVENIX 🖤.`
+    },
+
+    {
+        sender:"NOX",
+
+        text:
+        `HELLO MANAGER ${player.name.toUpperCase()}`
+    },
+
+    {
+        sender:"ELIOR",
+
+        text:
+        "You literally just met them."
+    },
+
+    {
+        sender:"NOX",
+
+        text:
+        "HELLO MANAGER"
+    },
+
+    {
+        sender:"ZAYN",
+
+        text:
+        "Please don't encourage him."
+    },
+
+    {
+        sender:"RAYDEN",
+
+        text:
+        `Welcome, ${player.name} 🙂`
+    },
+
+    {
+        sender:"KAEL",
+
+        text:
+        "I've sent tomorrow's rehearsal information here."
+    },
+
+    {
+        sender:"NOX",
+
+        text:
+        "important question"
+    },
+
+    {
+        sender:"NOX",
+
+        text:
+        "do managers buy bubble tea"
+    }
+
+    ];
+
+
+    /*
+       FIRST CHOICES.
+       AFTER ONE IS USED,
+       THESE ARE REMOVED.
+    */
+
+    chats.group.suggestions = [
+
+        "Maybe.",
+
+        "After practice.",
+
+        "Ask Kael.",
+
+        "Absolutely not 😭"
+
+    ];
+
+
+    renderMembers();
+
+    renderChatList();
+
+    openChat("group");
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const pageTitles = {
+
+    dashboard:
+    "Manager Dashboard",
+
+    members:
+    "RAVENIX Members",
+
+    messages:
+    "Messages",
+
+    music:
+    "Discography"
+
+};
+
+
+$$("[data-page]")
+.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const page =
+                button.dataset.page;
+
+
+            $$(".page")
+            .forEach(section => {
+
+                section.classList
+                .remove("active");
+
+            });
+
+
+            $("#" + page)
+            .classList
+            .add("active");
+
+
+            $$("[data-page]")
+            .forEach(item => {
+
+                item.classList.toggle(
+
+                    "active",
+
+                    item.dataset.page
+                    === page
+
+                );
+
+            });
+
+
+            $("#pageTitle")
+            .textContent =
+            pageTitles[page];
+
+
+            if(
+                page ===
+                "messages"
+            ){
+
+                setTimeout(
+                    scrollChatToBottom,
+                    40
+                );
+
+            }
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   MEMBER CARDS
+========================================================= */
+
+function renderMembers(){
+
+    $("#memberGrid")
+    .innerHTML =
+
+    members.map(member => `
+
+        <article
+            class="member-card"
+        >
+
+            <div
+                class="member-photo"
+            >
+                ${member.name[0]}
+            </div>
+
+
+            <div
+                class="member-info"
+            >
+
+                <h3>
+                    ${member.name}
+                </h3>
+
+                <p>
+                    ${member.role}
+                </p>
+
+                <p>
+                    ${member.status}
+                </p>
+
+            </div>
+
+        </article>
+
+    `).join("");
+
+}
+
+
+/* =========================================================
+   CHAT LIST
+========================================================= */
+
+function renderChatList(){
+
+    const order = [
+
+        "group",
+
+        "KAEL",
+
+        "ZAYN",
+
+        "RAYDEN",
+
+        "ELIOR",
+
+        "NOX"
+
+    ];
+
+
+    $("#chatList")
+    .innerHTML =
+
+    order.map(key => {
+
+        const chat =
+            chats[key];
+
+
+        const last =
+            chat.messages[
+                chat.messages.length - 1
+            ];
+
+
+        let preview =
+            "No messages yet";
+
+
+        if(last){
+
+            if(
+                last.sender ===
+                "SYSTEM"
+            ){
+
+                preview =
+                    last.text;
+
+            }
+
+            else{
+
+                const sender =
+                    last.sender ===
+                    "YOU"
+
+                    ? "You"
+
+                    : last.sender;
+
+
+                preview =
+                    `${sender}: ${last.text}`;
+
+            }
+
+        }
+
+
+        return `
+
+        <div
+            class="
+                chat-item
+                ${
+                    currentChat === key
+                    ? "active"
+                    : ""
+                }
+            "
+
+            data-chat="${key}"
+        >
+
+            <div class="avatar">
+
+                ${chat.avatar}
+
+                <span
+                    class="online"
+                ></span>
+
+            </div>
+
+
+            <div class="chat-meta">
+
+                <strong>
+                    ${escapeHTML(
+                        chat.name
+                    )}
+                </strong>
+
+                <div class="preview">
+
+                    ${escapeHTML(
+                        preview
+                    )}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+
+    $$("[data-chat]")
+    .forEach(item => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                openChat(
+                    item.dataset.chat
+                );
+
+            }
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   OPEN CHAT
+========================================================= */
+
+function openChat(key){
+
+    currentChat =
+        key;
+
+
+    const chat =
+        chats[key];
+
+
+    $("#headerAvatar")
+    .textContent =
+    chat.avatar;
+
+
+    $("#headerName")
+    .textContent =
+    chat.name;
+
+
+    $("#headerStatus")
+    .textContent =
+    chat.status;
+
+
+    $("#typingIndicator")
+    .textContent =
+    "";
+
+
+    renderMessages();
+
+    renderSuggestions();
+
+    renderChatList();
+
+
+    if(
+        window.innerWidth <=
+        800
+    ){
+
+        $("#messageLayout")
+        .classList
+        .add("chat-open");
+
+
+        $("#mobileBack")
+        .classList
+        .remove("hidden");
+
+    }
+
+
+    setTimeout(
+        scrollChatToBottom,
+        20
+    );
+
+}
+
+
+/* =========================================================
+   MOBILE BACK
+========================================================= */
+
+$("#mobileBack")
+.addEventListener(
+    "click",
+    () => {
+
+        $("#messageLayout")
+        .classList
+        .remove("chat-open");
+
+    }
+);
+
+
+/* =========================================================
+   RENDER MESSAGES
+========================================================= */
+
+function renderMessages(){
+
+    const chat =
+        chats[currentChat];
+
+
+    /*
+       PRIVATE DMs HAVE NOTHING
+       UNTIL THE PLAYER STARTS THEM.
+    */
+
+    if(
+        currentChat !==
+        "group"
+
+        &&
+
+        chat.messages.length ===
+        0
+    ){
+
+        $("#chatBody")
+        .innerHTML = `
+
+        <div class="empty-chat">
+
+            <div>
+
+                <strong>
+                    No messages yet.
+                </strong>
+
+                You only met
+                ${escapeHTML(chat.name)}
+                today.
+
+                <br>
+
+                Start a conversation
+                whenever you're ready.
+
+            </div>
+
+        </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    $("#chatBody")
+    .innerHTML =
+
+    chat.messages
+    .map(message => {
+
+
+        if(
+            message.sender ===
+            "SYSTEM"
+        ){
+
+            return `
+
+            <div
+                class="system-message"
+            >
+
+                ${escapeHTML(
+                    message.text
+                )}
+
+            </div>
+
+            `;
+
+        }
+
+
+        const mine =
+            message.sender ===
+            "YOU";
+
+
+        return `
+
+        <div
+            class="
+                message
+                ${mine ? "me" : ""}
+            "
+        >
+
+            <div
+                class="message-wrap"
+            >
+
+
+                ${
+                    mine
+
+                    ? ""
+
+                    : `
+
+                    <div
+                        class="sender"
+                    >
+
+                        ${escapeHTML(
+                            message.sender
+                        )}
+
+                    </div>
+
+                    `
+                }
+
+
+                <div
+                    class="bubble"
+                >
+
+                    ${escapeHTML(
+                        message.text
+                    )}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    })
+    .join("");
+
+
+    requestAnimationFrame(
+        scrollChatToBottom
+    );
+
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollChatToBottom(){
+
+    const body =
+        $("#chatBody");
+
+
+    if(!body)
+        return;
+
+
+    body.scrollTop =
+        body.scrollHeight;
+
+}
+
+
+/* =========================================================
+   RENDER DYNAMIC CHOICES
+========================================================= */
+
+function renderSuggestions(){
+
+    const chat =
+        chats[currentChat];
+
+
+    let suggestions =
+        Array.isArray(
+            chat.suggestions
+        )
+
+        ? chat.suggestions
+
+        : [];
+
+
+    /*
+       PRIVATE DM STARTERS ONLY APPEAR
+       BEFORE ANY MESSAGE EXISTS.
+    */
+
+    if(
+        currentChat !==
+        "group"
+
+        &&
+
+        chat.messages.length ===
+        0
+    ){
+
+        suggestions = [
+
+            `Hi ${currentChat}.`,
+
+            "Nice to meet you properly.",
+
+            "How are you doing?"
+
+        ];
+
+    }
+
+
+    const box =
+        $("#suggestionBox");
+
+
+    box.innerHTML =
+        "";
+
+
+    suggestions
+    .forEach(suggestion => {
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.type =
+            "button";
+
+
+        button.className =
+            "suggestion";
+
+
+        button.textContent =
+            suggestion;
+
+
+        button.addEventListener(
+            "click",
+            () => {
+
+
+                const chatKey =
+                    currentChat;
+
+
+                /*
+                   DELETE CURRENT OPTIONS
+                   IMMEDIATELY.
+                */
+
+                chats[chatKey]
+                .suggestions =
+                [];
+
+
+                box.innerHTML =
+                    "";
+
+
+                sendPlayerMessage(
+                    suggestion,
+                    chatKey
+                );
+
+            }
+        );
+
+
+        box.appendChild(
+            button
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   MESSAGE FORM
+========================================================= */
+
+$("#messageForm")
+.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+
+        if(currentlySending)
+            return;
+
+
+        const input =
+            $("#messageInput");
+
+
+        const text =
+            input.value
+            .trim();
+
+
+        if(!text)
+            return;
+
+
+        const chatKey =
+            currentChat;
+
+
+        input.value =
+            "";
+
+
+        /*
+           TYPING A CUSTOM MESSAGE ALSO
+           REMOVES OLD OPTIONS.
+        */
+
+        chats[chatKey]
+        .suggestions =
+        [];
+
+
+        $("#suggestionBox")
+        .innerHTML =
+        "";
+
+
+        sendPlayerMessage(
+            text,
+            chatKey
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SEND MESSAGE TO AI
+========================================================= */
+
+async function sendPlayerMessage(
+    text,
+    forcedChatKey = null
+){
+
+    if(currentlySending)
+        return;
+
+
+    const chatKey =
+        forcedChatKey ||
+        currentChat;
+
+
+    const chat =
+        chats[chatKey];
+
+
+    /*
+       NEVER REUSE OLD ANSWERS.
+    */
+
+    chat.suggestions =
+        [];
+
+
+    if(
+        currentChat ===
+        chatKey
+    ){
+
+        $("#suggestionBox")
+        .innerHTML =
+        "";
+
+    }
+
+
+    /*
+       ADD PLAYER MESSAGE.
+    */
+
+    chat.messages.push({
+
+        sender:"YOU",
+
+        text:text
+
+    });
+
+
+    if(
+        currentChat ===
+        chatKey
+    ){
+
+        renderMessages();
+
+    }
+
+
+    renderChatList();
+
+
+    currentlySending =
+        true;
+
+
+    $("#messageInput")
+    .disabled =
+    true;
+
+
+    $("#sendButton")
+    .disabled =
+    true;
+
+
+    try{
+
+
+        /*
+           CALL YOUR NETLIFY FUNCTION.
+
+           API KEY DOES NOT GO HERE.
+        */
+
+        const response =
+        await fetch(
+
+            "/.netlify/functions/chat",
+
+            {
+
+                method:"POST",
+
+
+                headers:{
+
+                    "Content-Type":
+                    "application/json"
+
+                },
+
+
+                body:
+                JSON.stringify({
+
+                    player:
+                    player,
+
+
+                    chat:
+                    chatKey,
+
+
+                    message:
+                    text,
+
+
+                    employmentDay:
+                    player.employmentDay,
+
+
+                    relationships:
+                    Object.fromEntries(
+
+                        members.map(
+                            member => [
+
+                                member.name,
+
+                                {
+
+                                    trust:
+                                    member.trust
+
+                                }
+
+                            ]
+                        )
+
+                    ),
+
+
+                    history:
+                    chat.messages
+                    .slice(-20)
+
+                })
+
+            }
+
+        );
+
+
+        if(!response.ok){
+
+            const errorText =
+                await response.text();
+
+
+            console.error(
+                "AI ERROR:",
+                errorText
+            );
+
+
+            throw new Error(
+                "AI request failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !Array.isArray(
+                data.messages
+            )
+
+            ||
+
+            data.messages.length ===
+            0
+        ){
+
+            throw new Error(
+                "AI returned no messages."
+            );
+
+        }
+
+
+        /*
+           DISPLAY EACH AI MESSAGE
+           IN ORDER.
+
+           THE SAME SPEAKER IS USED FOR:
+           1. TYPING INDICATOR
+           2. MESSAGE SENDER
+        */
+
+        for(
+            const reply
+            of data.messages
+        ){
+
+            if(
+                !reply ||
+                !reply.speaker ||
+                !reply.text
+            ){
+
+                continue;
+
+            }
+
+
+            await displayAIMessage(
+
+                chatKey,
+
+                reply.speaker,
+
+                reply.text
+
+            );
+
+        }
+
+
+        /*
+           GET BRAND NEW RESPONSE OPTIONS.
+        */
+
+        let newSuggestions =
+            [];
+
+
+        if(
+            Array.isArray(
+                data.suggestions
+            )
+        ){
+
+            newSuggestions =
+
+                data.suggestions
+
+                .filter(item =>
+
+                    typeof item ===
+                    "string"
+
+                    &&
+
+                    item.trim().length >
+                    0
+
+                )
+
+                .map(item =>
+                    item.trim()
+                )
+
+                .slice(0,4);
+
+        }
+
+
+        /*
+           IF AI FORGETS TO SEND
+           OPTIONS, GENERATE FALLBACKS.
+        */
+
+        if(
+            newSuggestions.length ===
+            0
+        ){
+
+            newSuggestions =
+                generateFallbackSuggestions(
+
+                    chatKey,
+
+                    data.messages
+
+                );
+
+        }
+
+
+        /*
+           REPLACE OLD OPTIONS.
+           NEVER APPEND THEM.
+        */
+
+        chats[chatKey]
+        .suggestions =
+        newSuggestions;
+
+
+        if(
+            currentChat ===
+            chatKey
+        ){
+
+            renderSuggestions();
+
+        }
+
+    }
+
+
+    catch(error){
+
+
+        console.error(
+            error
+        );
+
+
+        chat.messages.push({
+
+            sender:"SYSTEM",
+
+            text:
+            "Member network unavailable. Try again."
+
+        });
+
+
+        /*
+           NO OLD ANSWERS RETURN
+           AFTER AN ERROR.
+        */
+
+        chat.suggestions =
+            [];
+
+
+        if(
+            currentChat ===
+            chatKey
+        ){
+
+            $("#typingIndicator")
+            .textContent =
+            "";
+
+
+            renderMessages();
+
+            renderSuggestions();
+
+        }
+
+
+        renderChatList();
+
+    }
+
+
+    finally{
+
+
+        currentlySending =
+            false;
+
+
+        $("#messageInput")
+        .disabled =
+        false;
+
+
+        $("#sendButton")
+        .disabled =
+        false;
+
+
+        if(
+            currentChat ===
+            chatKey
+        ){
+
+            $("#messageInput")
+            .focus();
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   AI MESSAGE + TYPING
+
+   EXAMPLE:
+   speaker = NOX
+
+   NOX is typing...
+   ↓
+   NOX message
+
+   IT CANNOT TURN INTO KAEL HERE
+   BECAUSE BOTH USE THE SAME VARIABLE.
+========================================================= */
+
+function displayAIMessage(
+    chatKey,
+    speaker,
+    text
+){
+
+return new Promise(
+resolve => {
+
+
+    if(
+        currentChat ===
+        chatKey
+    ){
+
+        $("#typingIndicator")
+        .innerHTML = `
+
+            <span
+                class="typing-dots"
+            >
+
+                ${escapeHTML(
+                    speaker
+                )} is typing
+
+            </span>
+
+        `;
+
+    }
+
+
+    /*
+       SHORT NATURAL DELAY.
+    */
+
+    const typingTime =
+        Math.min(
+
+            2300,
+
+            650 +
+            String(text).length *
+            16
+
+        );
+
+
+    setTimeout(
+        () => {
+
+
+            /*
+               EXACT SAME SPEAKER
+               SENDS THE MESSAGE.
+            */
+
+            chats[chatKey]
+            .messages.push({
+
+                sender:
+                speaker,
+
+                text:
+                text
+
+            });
+
+
+            if(
+                currentChat ===
+                chatKey
+            ){
+
+                $("#typingIndicator")
+                .textContent =
+                "";
+
+
+                renderMessages();
+
+            }
+
+
+            renderChatList();
+
+
+            resolve();
+
+        },
+
+        typingTime
+
+    );
+
+});
+
+}
+
+
+/* =========================================================
+   FALLBACK RESPONSE CHOICES
+========================================================= */
+
+function generateFallbackSuggestions(
+    chatKey,
+    aiMessages
+){
+
+    const latest =
+        Array.isArray(aiMessages)
+
+        &&
+
+        aiMessages.length
+
+        ? aiMessages[
+            aiMessages.length - 1
+          ]
+
+        : null;
+
+
+    const text =
+        String(
+            latest?.text || ""
+        )
+        .toLowerCase();
+
+
+    /*
+       SLEEP / TIRED / REST
+    */
+
+    if(
+        text.includes("sleep")
+        ||
+        text.includes("tired")
+        ||
+        text.includes("rest")
+        ||
+        text.includes("exhausted")
+    ){
+
+        return [
+
+            "You should rest.",
+
+            "Are you okay?",
+
+            "We can adjust the schedule.",
+
+            "Don't push yourself."
+
+        ];
+
+    }
+
+
+    /*
+       FOOD
+    */
+
+    if(
+        text.includes("bubble tea")
+        ||
+        text.includes("food")
+        ||
+        text.includes("hungry")
+        ||
+        text.includes("eat")
+    ){
+
+        return [
+
+            "Maybe after practice.",
+
+            "What do you want?",
+
+            "Ask the others too.",
+
+            "You're paying 😭"
+
+        ];
+
+    }
+
+
+    /*
+       PRACTICE
+    */
+
+    if(
+        text.includes("practice")
+        ||
+        text.includes("rehearsal")
+        ||
+        text.includes("training")
+    ){
+
+        return [
+
+            "How is practice going?",
+
+            "Do you need more time?",
+
+            "I'll check the schedule.",
+
+            "Don't overwork yourself."
+
+        ];
+
+    }
+
+
+    /*
+       WORK
+    */
+
+    if(
+        text.includes("schedule")
+        ||
+        text.includes("manager")
+        ||
+        text.includes("meeting")
+    ){
+
+        return [
+
+            "I'll check it.",
+
+            "What do you need?",
+
+            "Tell me the details.",
+
+            "Okay, I'll handle it."
+
+        ];
+
+    }
+
+
+    /*
+       QUESTION
+    */
+
+    if(
+        text.includes("?")
+    ){
+
+        return [
+
+            "Maybe.",
+
+            "Why do you ask?",
+
+            "Tell me more.",
+
+            "What do you think?"
+
+        ];
+
+    }
+
+
+    /*
+       GENERIC
+    */
+
+    return [
+
+        "I see.",
+
+        "Really?",
+
+        "Tell me more.",
+
+        "What happened?"
+
+    ];
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if(
+            window.innerWidth >
+            800
+        ){
+
+            $("#messageLayout")
+            .classList
+            .remove("chat-open");
+
+
+            $("#mobileBack")
+            .classList
+            .add("hidden");
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
